@@ -9,7 +9,7 @@ from tensorflow.python.ops import rnn_cell_impl
 
 from utils import createVocabulary, loadVocabulary, computeF1Score, DataProcessor
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+#os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 parser = argparse.ArgumentParser(allow_abbrev=False)
 parser.add_argument("--num_units", type=int, default=64, help="Network size.", dest='layer_size')
@@ -96,7 +96,7 @@ def createModel(input_data, input_size, sequence_length, slots, slot_size, inten
         cell_bw = tf.contrib.rnn.DropoutWrapper(cell_bw, input_keep_prob=0.5,
                                                 output_keep_prob=0.5)
     if arg.embedding_path:
-        embedding_weight = np.load(arg.embedding_path)
+        embedding_weight = np.load(arg.embedding_path, allow_pickle=True)
         embedding = tf.Variable(embedding_weight, name='embedding', dtype=tf.float32)
     else:
         embedding = tf.get_variable('embedding', [input_size, layer_size])
